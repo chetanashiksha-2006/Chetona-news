@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>বিস্তারিত খবর | চেতনা নিউজ</title>
+  
+  <!-- Open Graph / WhatsApp Preview Meta Tags -->
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="চেতনা নিউজ">
+  <meta id="ogTitle" property="og:title" content="বিস্তারিত খবর | চেতনা নিউজ">
+  <meta id="ogDescription" property="og:description" content="চেতনা নিউজ পোর্টালে বিস্তারিত খবর পড়ুন।">
+  <meta id="ogImage" property="og:image" content="https://konaiparimal50.github.io/Chetana-news/assets/default-share-image.jpg">
+  <meta id="ogUrl" property="og:url" content="">
+  
+  <!-- Twitter Card Tags -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta id="twTitle" name="twitter:title" content="বিস্তারিত খবর | চেতনা নিউজ">
+  <meta id="twDescription" name="twitter:description" content="চেতনা নিউজ পোর্টালে বিস্তারিত খবর পড়ুন।">
+  <meta id="twImage" name="twitter:image" content="https://konaiparimal50.github.io/Chetana-news/assets/default-share-image.jpg">
+
+  <!-- গুগল ফন্টস থেকে তিরো বাংলা এবং নোতো সান্স যুক্ত করা হলো -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@300;400;500;600;700&family=Tiro+Bangla:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="details.css">
+</head>
+<body>
+
+  <!-- রিডিং প্রোগ্রেস বার -->
+  <div class="reading-progress-container">
+    <div class="reading-progress-bar" id="readingProgress"></div>
+  </div>
+
+  <header class="site-header">
+    <div class="header-container">
+      <div class="header-left">
+        <button class="menu-btn" id="menuBtn" title="মেনু"><i class="fas fa-bars"></i></button>
+        <div class="logo">
+          <a href="../index.html"><h1>চেতনা<span>নিউজ</span></h1></a>
+        </div>
+      </div>
+      <div class="header-right">
+        <button class="search-btn" id="searchBtn" title="খুজুন"><i class="fas fa-search"></i></button>
+      </div>
+    </div>
+  </header>
+
+  <!-- সাইডবার ওভারলে এবং মেনু -->
+  <div class="sidebar-overlay" id="sidebarOverlay"></div> 
+
+  <div class="sidebar-menu" id="sidebarMenu">
+    <div class="sidebar-header">
+      <h2>বিভাগ সমূহ</h2>
+      <button class="close-btn" id="closeBtn" title="বন্ধ করুন"><i class="fas fa-times"></i></button>
+    </div>
+    <ul class="sidebar-links">
+      <li><a href="../index.html"><i class="fas fa-home"></i> হোম</a></li>
+      <li><a href="../category/category.html?cat=জাতীয়"><i class="fas fa-flag"></i> জাতীয়</a></li>
+      <li><a href="../category/category.html?cat=আন্তর্জাতিক"><i class="fas fa-globe"></i> আন্তর্জাতিক</a></li>
+      <li><a href="../category/category.html?cat=রাজনীতি"><i class="fas fa-bullhorn"></i> রাজনীতি</a></li>
+      <li><a href="../category/category.html?cat=শিক্ষা"><i class="fas fa-book"></i> শিক্ষা</a></li>
+      <li><a href="../category/category.html?cat=খেলা"><i class="fas fa-futbol"></i> খেলা</a></li>
+      <li><a href="../category/category.html?cat=বিনোদন"><i class="fas fa-film"></i> বিনোদন</a></li> 
+
+      <!-- জেলা সমূহ ড্রপডাউন -->
+      <li class="sidebar-dropdown">
+        <a href="#" class="dropdown-toggle" id="districtToggle">
+          <i class="fas fa-map-marker-alt"></i> জেলা সমূহ
+          <i class="fas fa-chevron-down dropdown-icon"></i>
+        </a>
+        <ul class="sidebar-submenu" id="districtSubmenu">
+          <li><a href="../category/category.html?dist=আলিপুরদুয়ার">আলিপুরদুয়ার</a></li>
+          <li><a href="../category/category.html?dist=বাঁকুড়া">বাঁকুড়া</a></li>
+          <li><a href="../category/category.html?dist=বীরভূম">বীরভূম</a></li>
+          <li><a href="../category/category.html?dist=কোচবিহার">কোচবিহার</a></li>
+          <li><a href="../category/category.html?dist=দক্ষিণ ২৪ পরগনা">দক্ষিণ ২৪ পরগনা</a></li>
+          <li><a href="../category/category.html?dist=দক্ষিণ দিনাজপুর">দক্ষিণ দিনাজপুর</a></li>
+          <li><a href="../category/category.html?dist=দার্জিলিং">দার্জিলিং</a></li>
+          <li><a href="../category/category.html?dist=হাওড়া">হাওড়া</a></li>
+          <li><a href="../category/category.html?dist=হুগলি">হুগলি</a></li>
+          <li><a href="../category/category.html?dist=জলপাইগুড়ি">জলপাইগুড়ি</a></li>
+          <li><a href="../category/category.html?dist=ঝাড়গ্রাম">ঝাড়গ্রাম</a></li>
+          <li><a href="../category/category.html?dist=কালিম্পং">কালিম্পং</a></li>
+          <li><a href="../category/category.html?dist=কলকাতা">কলকাতা</a></li>
+          <li><a href="../category/category.html?dist=মালদহ">মালদহ</a></li>
+          <li><a href="../category/category.html?dist=মুর্শিদাবাদ">মুর্শিদাবাদ</a></li>
+          <li><a href="../category/category.html?dist=নদীয়া">নদীয়া</a></li>
+          <li><a href="../category/category.html?dist=উত্তর ২৪ পরগনা">উত্তর ২৪ পরগনা</a></li>
+          <li><a href="../category/category.html?dist=উত্তর দিনাজপুর">উত্তর দিনাজপুর</a></li>
+          <li><a href="../category/category.html?dist=পূর্ব বর্ধমান">পূর্ব বর্ধমান</a></li>
+          <li><a href="../category/category.html?dist=পূর্ব মেদিনীপুর">পূর্ব মেদিনীপুর</a></li>
+          <li><a href="../category/category.html?dist=পুরুলিয়া">পুরুলিয়া</a></li>
+          <li><a href="../category/category.html?dist=পশ্চিম বর্ধমান">পশ্চিম বর্ধমান</a></li>
+          <li><a href="../category/category.html?dist=পশ্চিম মেদিনীপুর">পশ্চিম মেদিনীপুর</a></li>
+        </ul>
+      </li> 
+
+      <!-- সম্পাদক ড্রপডাউন -->
+      <li class="sidebar-dropdown">
+        <a href="#" class="dropdown-toggle" id="editorToggle">
+          <i class="fas fa-user-edit"></i> সম্পাদক
+          <i class="fas fa-chevron-down dropdown-icon"></i>
+        </a>
+        <ul class="sidebar-submenu" id="editorSubmenu">
+          <li><a href="../category/category.html?editor=চেতনা">চেতনা</a></li>
+          
+        </ul>
+      </li>
+    </ul>
+  </div>
+
+  <main>
+    <article class="article-container" id="newsDetailContainer">
+      <!-- স্কেলিটন লোডার -->
+      <div id="skeletonLoader">
+        <div class="skel-line skel-title-1 shimmer"></div>
+        <div class="skel-line skel-title-2 shimmer"></div>
+        <div class="skel-line skel-meta shimmer"></div>
+        <div class="skel-image shimmer"></div>
+        <div class="skel-para">
+          <div class="skel-line shimmer"></div>
+          <div class="skel-line shimmer"></div>
+          <div class="skel-line shimmer"></div>
+          <div class="skel-line shimmer"></div>
+          <div class="skel-line shimmer" style="width: 70%;"></div>
+        </div>
+      </div>
+
+      <!-- আসল কন্টেন্ট -->
+      <div id="actualNewsContent" style="display: none;">
+        <h1 id="detailHeadline" class="article-title"></h1>
+        
+        <!-- লেখক ও প্রকাশের সময় মেটাডাটা -->
+        <div class="article-meta" id="articleMeta">
+          <div class="meta-item">
+            <i class="fas fa-user-edit"></i>
+            <span class="author-badge">লেখক</span>
+            <span id="detailAuthor">বিশেষ প্রতিনিধি</span>
+          </div>
+          <div class="meta-item">
+            <i class="far fa-calendar-alt"></i>
+            <span id="detailDate">২৬ জুন, ২০২৬</span>
+          </div>
+          <div class="meta-item">
+            <i class="far fa-clock"></i>
+            <span id="detailReadTime">৩ মিনিট পাঠ</span>
+          </div>
+        </div>
+
+        <!-- লেখার সাইজ পরিবর্তন করার প্যানেল -->
+        <div class="text-resizer">
+          <span>লেখা:</span>
+          <button class="resizer-btn" id="decFont" title="ছোট করুন">অ-</button>
+          <button class="resizer-btn" id="resetFont" title="স্বাভাবিক">অ</button>
+          <button class="resizer-btn" id="incFont" title="বড় করুন">অ+</button>
+        </div>
+
+        <!-- ইমেজ কন্টেইনার এবং ক্যাপশন -->
+        <div class="image-wrapper" id="detailImageWrapper" style="display: none;">
+          <img id="detailImage" src="" alt="News Image" class="article-image">
+          <div id="imageCaption" class="image-caption">বিশেষ সংবাদ চিত্র — চেতনা নিউজ পোর্টাল</div>
+        </div>
+
+        <div id="detailBody" class="article-body"></div>
+
+        <div class="social-share" id="socialShare">
+          <span style="font-weight: bold; margin-right: 15px; color: #333; font-family: 'Tiro Bangla', serif;">শেয়ার করুন:</span>
+          <a href="#" id="shareWa" class="share-btn btn-wa" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+          <a href="#" id="shareFb" class="share-btn btn-fb" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" id="shareTw" class="share-btn btn-tw" target="_blank" title="Twitter"><i class="fab fa-twitter"></i></a>
+          <a href="#" id="shareIg" class="share-btn btn-ig" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+        </div>
+      </div>
+    </article>
+
+    <section class="news-section">
+      <div class="section-heading">
+        <h2><i class="fas fa-fire" style="color: #b71c1c;"></i> পড়তে ভুলবেন না</h2>
+      </div>
+      <div id="moreNewsGrid" class="news-grid"></div>
+    </section>
+
+    <div class="ad-container">
+      <div style="font-size: 0.8rem; color: #777777; font-weight: normal; margin-bottom: 6px; font-family: sans-serif;">Advertisement</div>
+      <img src="https://via.placeholder.com/800x120?text=Your+Advertisement+Here" alt="Advertisement" class="ad-image">
+    </div>
+
+    <section class="extra-news-section">
+      <div class="extra-news-header">
+        <i class="far fa-newspaper"></i> আরও খবর
+      </div>
+      <div id="extraNewsList" class="extra-news-list"></div>
+    </section>
+  </main>
+  
+  <div id="footer-placeholder"></div>
+
+  <script src="../footer.js"></script>
+  <script> renderFooter('../'); </script>
+
+  <script src="details.js"></script>
+</body>
+</html>
+
