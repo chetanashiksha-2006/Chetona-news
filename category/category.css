@@ -1,0 +1,17 @@
+/* category.css */
+
+.section-heading {
+  margin-bottom: 30px;
+  border-left: 6px solid var(--accent);
+  padding-left: 15px;
+  background: #fff;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-radius: 0 8px 8px 0;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.section-heading h2 {
+  font-size: 1.8rem;
+  color: #b71c1c; 
+}
