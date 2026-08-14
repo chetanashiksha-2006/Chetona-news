@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>404 - Page Not Found | CSN News</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Poppins:wght@400;500;600;700;800&display=swap');
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: 'Poppins', 'Hind Siliguri', sans-serif;
+    background: #ffffff;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .bg-shape {
+    position: absolute;
+    border-radius: 50%;
+    z-index: 0;
+  }
+
+  .bg-shape.one {
+    width: 500px;
+    height: 500px;
+    background: #c1121f;
+    opacity: 0.06;
+    top: -150px;
+    left: -150px;
+  }
+
+  .bg-shape.two {
+    width: 400px;
+    height: 400px;
+    background: #c1121f;
+    opacity: 0.08;
+    bottom: -120px;
+    right: -100px;
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    max-width: 640px;
+    width: 100%;
+    padding: 60px 40px;
+    background: #ffffff;
+    border-radius: 24px;
+    box-shadow: 0 20px 60px rgba(193, 18, 31, 0.12);
+    border-top: 6px solid #c1121f;
+  }
+
+  .logo-mark {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 30px;
+    padding: 8px 20px;
+    background: #c1121f;
+    border-radius: 30px;
+  }
+
+  .logo-mark span {
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 1px;
+  }
+
+  .error-code {
+    font-size: 130px;
+    font-weight: 800;
+    color: #c1121f;
+    line-height: 1;
+    letter-spacing: -4px;
+    text-shadow: 4px 4px 0px rgba(193, 18, 31, 0.1);
+  }
+
+  .divider-line {
+    width: 70px;
+    height: 4px;
+    background: #c1121f;
+    margin: 24px auto;
+    border-radius: 2px;
+  }
+
+  .title-bn {
+    font-family: 'Hind Siliguri', sans-serif;
+    font-size: 30px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 8px;
+  }
+
+  .title-en {
+    font-size: 18px;
+    font-weight: 500;
+    color: #c1121f;
+    margin-bottom: 24px;
+    letter-spacing: 0.5px;
+  }
+
+  .desc-bn {
+    font-family: 'Hind Siliguri', sans-serif;
+    font-size: 16px;
+    color: #555555;
+    line-height: 1.8;
+    margin-bottom: 6px;
+  }
+
+  .desc-en {
+    font-size: 14px;
+    color: #888888;
+    line-height: 1.7;
+    margin-bottom: 36px;
+  }
+
+  .btn-home {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: #c1121f;
+    color: #ffffff;
+    text-decoration: none;
+    padding: 15px 38px;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 16px;
+    box-shadow: 0 10px 25px rgba(193, 18, 31, 0.3);
+    transition: all 0.25s ease;
+    border: 2px solid #c1121f;
+  }
+
+  .btn-home:hover {
+    background: #ffffff;
+    color: #c1121f;
+    transform: translateY(-3px);
+    box-shadow: 0 14px 30px rgba(193, 18, 31, 0.35);
+  }
+
+  .btn-home svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .footer-note {
+    margin-top: 30px;
+    font-size: 13px;
+    color: #aaaaaa;
+  }
+
+  .footer-note .bn {
+    font-family: 'Hind Siliguri', sans-serif;
+  }
+
+  @media (max-width: 480px) {
+    .container {
+      padding: 40px 24px;
+    }
+    .error-code {
+      font-size: 90px;
+    }
+    .title-bn {
+      font-size: 24px;
+    }
+  }
+</style>
+</head>
+<body>
+
+  <div class="bg-shape one"></div>
+  <div class="bg-shape two"></div>
+
+  <div class="container">
+    <div class="logo-mark">
+      <span>CSN NEWS</span>
+    </div>
+
+    <div class="error-code">404</div>
+    <div class="divider-line"></div>
+
+    <div class="title-bn">পেজটি খুঁজে পাওয়া যায়নি</div>
+    <div class="title-en">Page Not Found</div>
+
+    <p class="desc-bn">দুঃখিত, আপনি যে পেজটি খুঁজছেন তা বর্তমানে উপলব্ধ নেই অথবা সরিয়ে ফেলা হয়েছে।</p>
+    <p class="desc-en">Sorry, the page you are looking for doesn't exist or has been moved.</p>
+
+    <a href="index.html" class="btn-home">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+      হোমে ফিরে যান / Back to Home
+    </a>
+
+    <div class="footer-note">
+      <span class="bn">চেতনা নিউজ</span> — CSN News © 2026
+    </div>
+  </div>
+
+</body>
+</html>
