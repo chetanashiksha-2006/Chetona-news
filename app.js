@@ -5,11 +5,35 @@ const API_URL = "https://news-server-ut0z.onrender.com/api/news";
 const newsGrid = document.getElementById('newsGrid');
 const errorMessage = document.getElementById('errorMessage');
 const emptyMessage = document.getElementById('emptyMessage');
+const heroContainer = document.getElementById('heroContainer');
+const secondaryContainer = document.getElementById('secondaryContainer');
 
 // পেজিনেশনের জন্য গ্লোবাল ভ্যারিয়েবল
 let lastVisible = null; 
 let isLoading = false;
 let hasMore = true;
+let isFirstBatch = true; // প্রথম ব্যাচেই হিরো + সেকেন্ডারি লেআউট বসবে
+
+// বিভাগ অনুযায়ী রঙ (real newsroom-এর মতো ক্যাটাগরি কালার-কোডিং)
+const CATEGORY_COLORS = {
+  'জাতীয়': '#b71c1c',
+  'আন্তর্জাতিক': '#1e4d8f',
+  'রাজনীতি': '#6b21a8',
+  'শিক্ষা': '#0f766e',
+  'খেলা': '#15803d',
+  'বিনোদন': '#be185d'
+};
+const DEFAULT_CATEGORY_COLOR = '#b45309';
+
+function getCategoryColor(category) {
+  return CATEGORY_COLORS[category] || DEFAULT_CATEGORY_COLOR;
+}
+
+function categoryBadgeHTML(category) {
+  if (!category) return '';
+  const safeCategory = escapeHTML(category);
+  return `<span class="category-badge" style="background-color:${getCategoryColor(category)}">${safeCategory}</span>`;
+}
 
 function truncateText(text, maxLength = 100) {
   if (!text) return '';
@@ -36,6 +60,18 @@ function formatDate(dateString) {
   }
 }
 
+// একটি নিউজ আইটেম থেকে কার্ডে বসানোর মতো ডেটা তৈরি করে (হিরো/সেকেন্ডারি/গ্রিড—সব কার্ডেই ব্যবহার হয়)
+function getCardData(item, excerptLength = 100) {
+  const imageUrl = item.image || 'https://via.placeholder.com/400x250?text=No+Image';
+  const headline = escapeHTML(item.headline || 'শিরোনাম নেই');
+  const shortBody = escapeHTML(truncateText(item.body, excerptLength));
+  const editorName = escapeHTML(item.editor || 'P.K EDITOR');
+  const newsDate = formatDate(item.date || item.createdAt);
+  const itemId = item.id || item._id;
+  const badge = categoryBadgeHTML(item.category);
+  return { imageUrl, headline, shortBody, editorName, newsDate, itemId, badge };
+}
+
 // স্কেলিটন লোডিং (HTML স্ট্রিং রিটার্ন করবে)
 function getSkeletonsHTML(count) {
   let html = '';
@@ -55,37 +91,114 @@ function getSkeletonsHTML(count) {
   return html;
 }
 
+// হিরো কার্ডের স্কেলিটন
+function getHeroSkeletonHTML() {
+  return `
+    <div class="hero-card skel-hero skeleton-loading-placeholder">
+      <div class="skel-thumb shimmer"></div>
+    </div>`;
+}
+
+// সেকেন্ডারি কার্ডগুলোর স্কেলিটন
+function getSecondarySkeletonHTML(count) {
+  let html = '';
+  for (let i = 0; i < count; i++) {
+    html += `
+      <div class="secondary-card skel-secondary skeleton-loading-placeholder">
+        <div class="skel-thumb shimmer"></div>
+        <div class="skel-body">
+          <div class="skel-line title-1 shimmer"></div>
+          <div class="skel-line title-2 shimmer"></div>
+        </div>
+      </div>`;
+  }
+  return html;
+}
+
 // স্কেলিটন রিমুভ করার ফাংশন
 function removeSkeletons() {
   const skeletons = document.querySelectorAll('.skeleton-loading-placeholder');
   skeletons.forEach(el => el.remove());
 }
 
-// নিউজ কার্ড তৈরি করে গ্রিডে যুক্ত করার ফাংশন
+// হিরো (শীর্ষ খবর) কার্ড রেন্ডার করে
+function renderHero(item) {
+  if (!heroContainer) return;
+  if (!item) { heroContainer.innerHTML = ''; return; }
+
+  const { imageUrl, headline, shortBody, editorName, newsDate, itemId, badge } = getCardData(item, 140);
+
+  heroContainer.innerHTML = `
+    <article class="hero-card">
+      <a href="details/details.html?id=${itemId}" class="hero-link">
+        <div class="hero-media">
+          <img src="${imageUrl}" alt="${headline}" loading="eager">
+          <div class="hero-gradient"></div>
+          ${badge}
+        </div>
+        <div class="hero-content">
+          <span class="hero-eyebrow">শীর্ষ খবর</span>
+          <h2 class="hero-headline">${headline}</h2>
+          <p class="hero-excerpt">${shortBody}</p>
+          <div class="hero-meta">
+            <span class="editor-name"><i class="fas fa-user-edit"></i> ${editorName}</span>
+            <span class="publish-date"><i class="far fa-clock"></i> ${newsDate}</span>
+          </div>
+        </div>
+      </a>
+    </article>`;
+}
+
+// পাশের তালিকায় থাকা সেকেন্ডারি খবরগুলো রেন্ডার করে (ছোট থাম্বনেইল + শিরোনাম)
+function renderSecondary(items) {
+  if (!secondaryContainer) return;
+  if (!items || !items.length) { secondaryContainer.innerHTML = ''; return; }
+
+  secondaryContainer.innerHTML = items.map(item => {
+    const { imageUrl, headline, editorName, newsDate, itemId } = getCardData(item, 70);
+    return `
+      <article class="secondary-card">
+        <a href="details/details.html?id=${itemId}" class="secondary-link">
+          <div class="secondary-media">
+            <img src="${imageUrl}" alt="${headline}" loading="lazy">
+          </div>
+          <div class="secondary-content">
+            <h3>${headline}</h3>
+            <div class="secondary-meta">
+              <span>${editorName}</span>
+              <span>${newsDate}</span>
+            </div>
+          </div>
+        </a>
+      </article>`;
+  }).join('');
+}
+
+// নিউজ কার্ড তৈরি করে মূল গ্রিডে যুক্ত করার ফাংশন
 function appendNews(newsList) {
   newsList.forEach(item => {
+    const { imageUrl, headline, shortBody, editorName, newsDate, itemId, badge } = getCardData(item, 100);
+
     const card = document.createElement('article');
     card.className = 'news-card';
 
-    const imageUrl = item.image || 'https://via.placeholder.com/400x250?text=No+Image';
-    const headline = escapeHTML(item.headline || 'শিরোনাম নেই');
-    const shortBody = escapeHTML(truncateText(item.body, 100));
-    const editorName = escapeHTML(item.editor || 'P.K EDITOR'); 
-    const newsDate = formatDate(item.date || item.createdAt); 
-    const itemId = item.id || item._id;
-
     card.innerHTML = `
-      <img src="${imageUrl}" alt="${headline}" loading="lazy">
-      <div class="card-content">
-        <div class="card-meta">
-          <span class="editor-name"><i class="fas fa-user-edit"></i> ${editorName}</span>
-          <span class="publish-date"><i class="far fa-clock"></i> ${newsDate}</span>
+      <a href="details/details.html?id=${itemId}" class="card-link">
+        <div class="card-media">
+          <img src="${imageUrl}" alt="${headline}" loading="lazy">
+          ${badge}
         </div>
-        
-        <h3>${headline}</h3>
-        <p>${shortBody}</p>
-        <a href="details/details.html?id=${itemId}" class="read-more">বিস্তারিত পড়ুন →</a>
-      </div>
+        <div class="card-content">
+          <div class="card-meta">
+            <span class="editor-name"><i class="fas fa-user-edit"></i> ${editorName}</span>
+            <span class="publish-date"><i class="far fa-clock"></i> ${newsDate}</span>
+          </div>
+
+          <h3>${headline}</h3>
+          <p>${shortBody}</p>
+          <span class="read-more">বিস্তারিত পড়ুন →</span>
+        </div>
+      </a>
     `;
 
     newsGrid.appendChild(card);
@@ -101,7 +214,11 @@ async function fetchNews() {
     errorMessage.style.display = 'none';
     emptyMessage.style.display = 'none';
 
-    // নতুন ডেটা আসার আগে নিচে স্কেলিটন দেখানো
+    // নতুন ডেটা আসার আগে স্কেলিটন দেখানো (প্রথমবার হিরো + সেকেন্ডারিও)
+    if (isFirstBatch) {
+      heroContainer.innerHTML = getHeroSkeletonHTML();
+      secondaryContainer.innerHTML = getSecondarySkeletonHTML(3);
+    }
     newsGrid.insertAdjacentHTML('beforeend', getSkeletonsHTML(6));
 
     let url = `${API_URL}?limit=20`;
@@ -123,6 +240,10 @@ async function fetchNews() {
     if (!Array.isArray(data) || data.length === 0) {
       if (!lastVisible) {
         emptyMessage.style.display = 'block'; 
+        if (isFirstBatch) {
+          renderHero(null);
+          renderSecondary([]);
+        }
       }
       hasMore = false; 
       isLoading = false;
@@ -136,13 +257,29 @@ async function fetchNews() {
       hasMore = false; // ২০টার কম হলে আর নিউজ নেই ধরে নেওয়া হবে
     }
 
-    appendNews(data);
+    if (isFirstBatch) {
+      // প্রথম আইটেম বড় হিরো কার্ড, পরের ৩টি পাশের সেকেন্ডারি তালিকায়, বাকিগুলো নিচের গ্রিডে
+      isFirstBatch = false;
+      const heroItem = data[0];
+      const secondaryItems = data.slice(1, 4);
+      const gridItems = data.slice(4);
+
+      renderHero(heroItem);
+      renderSecondary(secondaryItems);
+      if (gridItems.length) appendNews(gridItems);
+    } else {
+      appendNews(data);
+    }
     isLoading = false;
   } catch (error) {
     console.error('Error fetching news:', error);
     removeSkeletons();
     if (!lastVisible) {
       newsGrid.innerHTML = '';
+      if (isFirstBatch) {
+        heroContainer.innerHTML = '';
+        secondaryContainer.innerHTML = '';
+      }
       errorMessage.style.display = 'block';
     }
     isLoading = false;
